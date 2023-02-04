@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class Employee {
     @Id
     private String _id;
-    private String role, dept, location;
+    private String name, role, dept, location;
     private Integer salary;
-    private boolean status;
+    private boolean employed;
 }

@@ -12,5 +12,7 @@ public interface EmployeeRepository extends ReactiveMongoRepository<Employee, St
 
     Flux<Employee> findByRole(String role);
 
-    Flux<Employee> findByStatus(String status);
+    Flux<Employee> findByDept(String department);
+
+    Flux<Employee> findByEmployed(boolean employed);
 }

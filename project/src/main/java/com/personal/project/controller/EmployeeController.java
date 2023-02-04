@@ -26,6 +26,11 @@ public class EmployeeController {
         return service.saveEmployeeToDatabase(employee);
     }
 
+    @GetMapping(value = "/all")
+    public Flux<Employee> allEmployees() {
+        return service.getAllEmployees();
+    }
+
     @PutMapping(value = "/update")
     public Mono<Employee> updateEmployee(@RequestBody Employee employee) {
         return service.updateEmployeeDetails(employee);
@@ -36,23 +41,28 @@ public class EmployeeController {
         return service.deleteEmployeeFromDatabase(_id);
     }
 
-    @GetMapping(value = "/fetch/{role}")
-    public Flux<Employee> findByRole(@PathVariable String role) {
+    @GetMapping(value = "/fetch")
+    public Flux<Employee> findByRole(@RequestParam String role) {
         return service.getEmployeesByRole(role);
     }
 
-    @GetMapping(value = "fetch/{location}")
+    @GetMapping(value = "/fetch/location/{location}")
     public Flux<Employee> findByLocation(@PathVariable String location) {
         return service.getEmployeesByLocation(location);
     }
 
-    @GetMapping(value = "/fetch/{status}")
-    public Flux<Employee> getByEmploymentStatus(@PathVariable String status){
+    @GetMapping(value = "/fetch/department/{department}")
+    public Flux<Employee> findByDepartment(@PathVariable String department){
+        return service.getEmployeesByDepartment(department);
+    }
+    @GetMapping(value = "/fetch/isEmployed")
+    public Flux<Employee> getByEmploymentStatus(@RequestParam boolean status) {
         return service.getByEmploymentStatus(status);
     }
 
     @GetMapping(value = "/filter")
-    public Mono<PaginatedEmployee> getEmployeesPaginated(@RequestBody String _id, EmployeeFilter employeeFilter){
-        return service.getEmployeesByPagination(employeeFilter, _id);
+    public Mono<PaginatedEmployee> getEmployeesPaginated(@RequestParam String _id, @RequestBody EmployeeFilter employeeFilter) {
+        return service.findEmployeesByPagination(employeeFilter, _id);
     }
 }
+

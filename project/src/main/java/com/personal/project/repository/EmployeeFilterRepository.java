@@ -27,27 +27,28 @@ public class EmployeeFilterRepository {
         Criteria employeeCriteria = Criteria.where("id").in(_id);
         query.addCriteria(employeeCriteria);
 
-        if (employeeFilter.getDept() != null && !employeeFilter.getDept().isEmpty()){
+        if (employeeFilter.getDept() != null && !employeeFilter.getDept().isEmpty()) {
             Criteria deptCriteria = Criteria.where("dept").in(employeeFilter.getDept());
             query.addCriteria(deptCriteria);
         }
 
-        if(employeeFilter.getRole() != null && !employeeFilter.getRole().isEmpty()){
+        if (employeeFilter.getRole() != null && !employeeFilter.getRole().isEmpty()) {
             Criteria roleCriteria = Criteria.where("role").in(employeeFilter.getRole());
             query.addCriteria(roleCriteria);
         }
 
-        if(employeeFilter.isEmploymentStatus()){
-            Criteria employementStatusCriteria = Criteria.where("employmentStatus").in(employeeFilter.isEmploymentStatus());
+        if (employeeFilter.isEmployed()) {
+            Criteria employementStatusCriteria = Criteria.where("employmentStatus")
+                    .in(employeeFilter.isEmployed());
             query.addCriteria(employementStatusCriteria);
         }
 
-        if(employeeFilter.getLocation() != null && !employeeFilter.getLocation().isEmpty()){
+        if (employeeFilter.getLocation() != null && !employeeFilter.getLocation().isEmpty()) {
             Criteria locationCriteria = Criteria.where("location").in(employeeFilter.getLocation());
             query.addCriteria(locationCriteria);
         }
 
-        if(employeeFilter.getSalary() != null && !employeeFilter.getSalary().toString().isEmpty()){
+        if (employeeFilter.getSalary() != null && !employeeFilter.getSalary().toString().isEmpty()) {
             Criteria salaryCriteria = Criteria.where("salary").in(employeeFilter.getSalary());
             query.addCriteria(salaryCriteria);
         }
@@ -60,7 +61,7 @@ public class EmployeeFilterRepository {
             PaginatedEmployee paginatedEmployee = new PaginatedEmployee();
             paginatedEmployee.setTotalCount(count);
 
-            if (page != null){
+            if (page != null) {
                 return reactiveMongoTemplate.find(query.with(page), Employee.class).collectList().flatMap(employees -> {
                     paginatedEmployee.setEmployees(employees);
                     return Mono.just(paginatedEmployee);

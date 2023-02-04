@@ -14,13 +14,15 @@ public class EmployeeFilter {
     private String role, dept, location;
     private Integer salary;
 
-    private boolean employmentStatus;
+    private boolean employed;
 
-    //Pagination
+    // Pagination
     private Integer count, page;
+    
+    //Searching
     private String searchTerm;
 
-    //Sorting
+    // Sorting
     private List<String> sortValue;
     private List<Sort.Direction> sortOrder;
 }
